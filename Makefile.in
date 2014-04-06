@@ -26,7 +26,8 @@ install: ./build/libcsv.so ./build/libcsv.a
 	install ./src/include/csv/*.hpp $(INCDIR)
 
 uninstall:
-	rm -fr $(LIBDIR)
+	rm -f $(LIBDIR)/libcsv.so
+	rm -f $(LIBDIR)/libcsv.a
 	rm -fr $(INCDIR)
 
 clean: 
