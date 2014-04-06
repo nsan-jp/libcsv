@@ -2,6 +2,9 @@
 
 csv::csv() {
   init_fields();
+  this->ds = NULL;
+  eod = true;
+  _lines = 0;
 }
 
 csv::csv(csv_datasource* ds) {
@@ -11,8 +14,10 @@ csv::csv(csv_datasource* ds) {
 
 csv::~csv() {
   free(data_buffer);
-  ds->close();
-  delete ds;
+  if (ds) {
+    ds->close();
+    delete ds;
+  }
 }
 
 void csv::to_csv(vector<string>& row, string& ret, bool crlf) {
