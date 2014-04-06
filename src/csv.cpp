@@ -20,12 +20,33 @@ csv::~csv() {
   }
 }
 
+void csv::to_csv(string& ret) {
+  to_csv(put_field_buffer, ret, true);
+  put_field_buffer.clear();
+}
+void csv::to_csv(string& ret, bool crlf) {
+  to_csv(put_field_buffer, ret, crlf, false);
+  put_field_buffer.clear();
+}
+void csv::to_csv(string& ret, bool crlf, bool empty_field_to_null) {
+  to_csv(put_field_buffer, ret, crlf, empty_field_to_null);
+  put_field_buffer.clear();
+}
+void csv::to_csv(vector<string>& row, string& ret) {
+  to_csv(row, ret, true);
+}
 void csv::to_csv(vector<string>& row, string& ret, bool crlf) {
+  to_csv(row, ret, crlf, false);
+}
+void csv::to_csv(vector<string>& row, string& ret, bool crlf, bool empty_field_to_null) {
   unsigned i,j;
   init_data_buffer();
   for(i = 0; i < row.size(); i++) {
     if (i > 0) {
       add_char_to_data_buffer(',');
+    }
+    if (empty_field_to_null && row[i].size() == 0) {
+      continue;
     }
     add_char_to_data_buffer('\"');
     for(j = 0; j < row[i].size(); j++) {
@@ -45,7 +66,7 @@ void csv::to_csv(vector<string>& row, string& ret, bool crlf) {
 }
 
 bool csv::has_more_row() {
-  if(eod) {
+  if (eod) {
     return false;
   } else {
     eod = (ds->getc(true) == EOF);

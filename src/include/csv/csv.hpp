@@ -4,6 +4,7 @@
 #include <string>
 #include <string.h>
 #include <vector>
+#include <sstream>
 #include <fstream>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -20,7 +21,17 @@ public:
   csv();
   csv(csv_datasource* ds);
   ~csv();
+  template<typename T> void put_field(T field) {
+    ostringstream os;
+    os << field;
+    put_field_buffer.push_back(os.str());
+  }
+  void to_csv(string& ret);
+  void to_csv(string& ret, bool crlf);
+  void to_csv(string& ret, bool crlf, bool empty_field_to_null);
+  void to_csv(vector<string>& row, string& ret);
   void to_csv(vector<string>& row, string& ret, bool crlf);
+  void to_csv(vector<string>& row, string& ret, bool crlf, bool empty_field_to_null);
   bool has_more_row();
   bool next_row(vector<string>& row);
   size_t lines();
@@ -66,6 +77,8 @@ private:
   size_t data_buffer_pos;
 
   bool eod;
+
+  vector<string> put_field_buffer;
 
 
   void init_fields();
