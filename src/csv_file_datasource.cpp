@@ -16,7 +16,7 @@ int csv_file_datasource::getc(bool no_inc_pos) {
   }
   if (buffer[buffer_pos] == 0) {
     clear_buffer();
-    size_t size = read(csv_file, buffer, (BUF_SIZE - 1));
+    size_t size = ::read(csv_file, buffer, (BUF_SIZE - 1));
     if (size == 0) {
       return EOF;
     }

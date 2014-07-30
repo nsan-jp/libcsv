@@ -5,6 +5,7 @@
 #include <string>
 #include <stdlib.h>
 #include <fstream>
+#include <unistd.h>
 #include <fcntl.h>
 
 using namespace std;
