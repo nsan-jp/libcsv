@@ -100,6 +100,7 @@ bool csv::next_row(vector<string>& row) {
       if (column_mode == NO_QUOTED_COLUMN || state == QUOTED) {
         flush_field(row);
         state = CONTROL;
+        column_mode = NO_QUOTED_COLUMN;
       } else {
         add_char_to_data_buffer(c);
       }

@@ -45,6 +45,7 @@ public:
       }
       proc(i, &row);
     }
+    return true;
   }
 private:
   static const int BUF_SIZE = 1024 * 32;
